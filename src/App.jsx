@@ -13,9 +13,11 @@ import './index.css';
 
 function App() {
   const [isCmdOpen, setIsCmdOpen] = useState(false);
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
+    document.documentElement.setAttribute('data-theme', 'light');
+
     // Spotlight effect in project cards
     const handleMouseMove = (e) => {
       const projectCards = document.querySelectorAll('.project-card');

@@ -49,6 +49,19 @@ body {
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+.app-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+main,
+footer,
+nav,
+.hud-trigger-btn {
+  position: relative;
+  z-index: 1;
+}
+
 /* Glassmorphism Utility */
 .liquid-glass {
   background: var(--bg-glass);

@@ -33,7 +33,7 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   text-decoration: none;
-  color: #111111;
+  color: var(--text-primary);
   white-space: nowrap;
   transition: opacity 0.2s ease;
 }
@@ -62,7 +62,7 @@
 
 .nav-item {
   text-decoration: none;
-  color: #555555;
+  color: var(--text-secondary);
   font-weight: 500;
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -90,12 +90,10 @@
 }
 
 .theme-toggle {
-  background: none;
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
+  background: transparent;
+  border: 0;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 50%;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,9 +106,63 @@
 }
 
 .theme-toggle:hover {
-  border-color: var(--accent-primary);
+  transform: translateY(-50%) scale(1.02);
+}
+
+.theme-toggle-track {
+  position: relative;
+  width: 74px;
+  height: 38px;
+  border-radius: 999px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(240,240,240,0.75));
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  overflow: hidden;
+}
+
+[data-theme='dark'] .theme-toggle-track {
+  background: linear-gradient(180deg, rgba(24,24,24,0.92), rgba(34,34,34,0.84));
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffffff, #e9eef7);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+}
+
+[data-theme='dark'] .theme-toggle-thumb {
+  background: linear-gradient(180deg, #f4f7ff, #cbd5e1);
+}
+
+.theme-toggle-icon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  color: var(--text-primary);
+  opacity: 0.6;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.theme-toggle--light .theme-toggle-icon--sun,
+.theme-toggle--dark .theme-toggle-icon--moon {
+  opacity: 1;
   color: var(--accent-primary);
-  background: rgba(0, 242, 255, 0.05);
 }
 
 .mobile-toggle {
@@ -128,7 +180,7 @@
 
 .scroll-progress-bar {
   height: 100%;
-  background: rgba(17, 17, 17, 0.35);
+  background: var(--accent-primary);
   transform-origin: 0%;
 }
 
@@ -162,6 +214,7 @@
     transform: none;
     right: auto;
     top: auto;
+    justify-self: end;
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import './Hero.css';
 
@@ -72,8 +72,9 @@ function KineticHeadline({ phrases, reducedMotion }) {
 
 const Hero = () => {
   const [titleIndex, setTitleIndex] = useState(0);
-  const [parallax, setParallax] = useState({ x: 0, y: 0 });
   const reducedMotion = useReducedMotion();
+  const heroRef = useRef(null);
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -82,19 +83,23 @@ const Hero = () => {
     return () => clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    const node = heroRef.current;
+    if (!node) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroVisible(entry.isIntersecting);
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   const currentTitle = TITLES[titleIndex];
   const titleKey = currentTitle.phrases.join('-');
-
-  const handlePointerMove = useCallback((e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const nx = (e.clientX - rect.left) / rect.width - 0.5;
-    const ny = (e.clientY - rect.top) / rect.height - 0.5;
-    setParallax({ x: -nx * 14, y: -ny * 10 });
-  }, []);
-
-  const handlePointerLeave = useCallback(() => {
-    setParallax({ x: 0, y: 0 });
-  }, []);
 
   const leftBracket = { rest: { x: 0, scale: 1 }, hover: { x: -4, scale: 1.08 } };
   const rightBracket = { rest: { x: 0, scale: 1 }, hover: { x: 4, scale: 1.08 } };
@@ -105,19 +110,13 @@ const Hero = () => {
     <section
       className="hero-section hero-luxury"
       id="home"
-      onMouseMove={handlePointerMove}
-      onMouseLeave={handlePointerLeave}
+      ref={heroRef}
     >
-      {/* Background watermark */}
-      <div className="hero-bg-layer" aria-hidden="true">
-        <motion.p
-          className="hero-watermark"
-          animate={{ x: parallax.x, y: parallax.y }}
-          transition={{ type: 'spring', stiffness: 120, damping: 22, mass: 0.8 }}
-        >
-          TANISHKA AGARWAL
-        </motion.p>
-      </div>
+      {isHeroVisible && (
+        <div className="hero-bg-layer" aria-hidden="true">
+          <motion.p className="hero-watermark">TANISHKA AGARWAL</motion.p>
+        </div>
+      )}
 
       {/* Editorial spine (hidden) */}
       <div className="hero-spine" aria-hidden="true" />

@@ -3,7 +3,9 @@
 .hero-section.hero-luxury {
   --hero-canvas: var(--bg-primary); /* respect global theme background */
   --hero-ink: var(--text-primary); /* text color should follow theme */
+  --hero-watermark: rgba(17, 17, 17, 0.08);
   --hero-spine-left: clamp(2rem, 6vw, 6rem); /* small responsive left offset */
+  --hero-copy-top: clamp(7rem, 12vh, 10rem);
   position: relative;
   min-height: 100vh;
   width: 100%;
@@ -14,13 +16,14 @@
 
 /* Background watermark layer */
 .hero-bg-layer {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .hero-watermark {
@@ -30,10 +33,15 @@
   font-weight: 300;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.05);
+  color: var(--hero-watermark);
   white-space: nowrap;
   user-select: none;
   will-change: transform;
+  opacity: 0.9;
+}
+
+[data-theme='dark'] .hero-section.hero-luxury {
+  --hero-watermark: rgba(255, 255, 255, 0.14);
 }
 
 /* Editorial spine */
@@ -84,12 +92,13 @@
   grid-template-columns: 55% 45%;
   min-height: 100vh;
   width: 100%;
+  margin-top: 8.9rem
 }
 
 .hero-copy {
   display: flex;
   align-items: flex-start;
-  padding: 14rem clamp(1.5rem, 3vw, 2.5rem) clamp(3rem, 8vh, 5rem);
+  padding: clamp(4.5rem, 8vh, 6rem) clamp(1.5rem, 3vw, 2.5rem) clamp(3rem, 8vh, 5rem);
   padding-left: calc(var(--hero-spine-left) + clamp(1.5rem, 2.4vw, 2.2rem));
   max-width: 100%;
 }
@@ -383,7 +392,7 @@
   }
 
   .hero-copy {
-    padding: 10rem 1.5rem 2rem;
+    padding: 5rem 1.5rem 2rem;
     padding-left: calc(var(--hero-spine-left) + 1.25rem);
   }
 

@@ -56,28 +56,26 @@ const Navbar = ({ theme, onThemeChange }) => {
             </motion.a>
           ))}
           
-          <button className="theme-toggle" onClick={toggleTheme}>
-            <AnimatePresence mode="wait">
-              {theme === 'dark' ? (
-                <motion.div
-                  key="sun"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                >
-                  <Sun size={20} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="moon"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                >
-                  <Moon size={20} />
-                </motion.div>
-              )}
-            </AnimatePresence>
+          <button
+            className={`theme-toggle theme-toggle--${theme}`}
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            aria-pressed={theme === 'dark'}
+          >
+            <span className="theme-toggle-track" aria-hidden="true">
+              <span className="theme-toggle-icon theme-toggle-icon--sun">
+                <Sun size={14} />
+              </span>
+              <span className="theme-toggle-icon theme-toggle-icon--moon">
+                <Moon size={14} />
+              </span>
+              <motion.span
+                className="theme-toggle-thumb"
+                initial={false}
+                animate={{ x: theme === 'dark' ? 32 : 0 }}
+                transition={{ type: 'spring', stiffness: 500, damping: 32 }}
+              />
+            </span>
           </button>
         </div>
 
