@@ -60,11 +60,7 @@ const About = () => {
           <div className="main-content">
             <h3>I'm a Creative Technologist based in the digital frontier.</h3>
             <p>
-              I specialize in building immersive digital experiences that push the 
-              boundaries of what's possible on the web. With a strong foundation 
-              in full-stack development and an obsessive focus on cybersecurity, 
-              I craft solutions that are not only visually stunning but also 
-              architecturally sound.
+              I'm a Creative Technologist based in the digital frontier. I specialize in building what you require. I push the boundaries of ai agents, my mind and what's possible on the web. With a strong foundation in full-stack development and an obsessive focus on cybersecurity, I craft solutions that are not only visually stunning but also architecturally strong. My work represents me and my curiosity to be more than what I am.
             </p>
             <p>
               My journey started at the intersection of design and logic, where I 

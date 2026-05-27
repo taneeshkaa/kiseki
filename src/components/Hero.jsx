@@ -1,9 +1,15 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import './Hero.css';
 
-const TITLES = ['FULLSTACK', 'CREATIVE TECHNOLOGIST'];
+/** Phrase groups (never break inside a phrase) */
+const TITLES = [
+  { phrases: ['FULLSTACK', 'ENGINEER'] },
+  { phrases: ['CYBERSECURITY', 'STUDENT'] },
+];
+
 const ROTATION_MS = 4200;
+const FLIP_EASE = [0.16, 1, 0.3, 1];
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -12,17 +18,56 @@ function useReducedMotion() {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => setReduced(mq.matches);
     update();
-
-    if (mq.addEventListener) {
-      mq.addEventListener('change', update);
-      return () => mq.removeEventListener('change', update);
-    }
-
-    mq.addListener(update);
-    return () => mq.removeListener(update);
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
   }, []);
 
   return reduced;
+}
+
+function KineticChar({ char, index, reducedMotion }) {
+  const display = char === ' ' ? '\u00A0' : char;
+
+  if (reducedMotion) return <span className="kinetic-char-inner">{display}</span>;
+
+  return (
+    <motion.span
+      className="kinetic-char-inner"
+      initial={{ rotateX: -88, y: '42%', opacity: 0 }}
+      animate={{ rotateX: 0, y: 0, opacity: 1 }}
+      transition={{
+        duration: 0.52,
+        delay: index * 0.028,
+        ease: FLIP_EASE,
+      }}
+      style={{ transformStyle: 'preserve-3d' }}
+    >
+      {display}
+    </motion.span>
+  );
+}
+
+function KineticHeadline({ phrases, reducedMotion }) {
+  const phraseKey = phrases.join('|');
+  let charOffset = 0;
+
+  return (
+    <span className="kinetic-headline" style={{ perspective: 1200 }}>
+      {phrases.map((phrase, pi) => (
+        <span className="kinetic-phrase" key={`${phraseKey}-p-${pi}`}>
+          {phrase.split('').map((char, ci) => {
+            const index = charOffset;
+            charOffset += 1;
+            return (
+              <span className="kinetic-char-cell" key={`${phraseKey}-${pi}-${ci}`}>
+                <KineticChar char={char} index={index} reducedMotion={reducedMotion} />
+              </span>
+            );
+          })}
+        </span>
+      ))}
+    </span>
+  );
 }
 
 const Hero = () => {
@@ -31,17 +76,19 @@ const Hero = () => {
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setTitleIndex((index) => (index + 1) % TITLES.length);
+    const id = setInterval(() => {
+      setTitleIndex((i) => (i + 1) % TITLES.length);
     }, ROTATION_MS);
-
-    return () => window.clearInterval(timer);
+    return () => clearInterval(id);
   }, []);
 
-  const handlePointerMove = useCallback((event) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const nx = (event.clientX - rect.left) / rect.width - 0.5;
-    const ny = (event.clientY - rect.top) / rect.height - 0.5;
+  const currentTitle = TITLES[titleIndex];
+  const titleKey = currentTitle.phrases.join('-');
+
+  const handlePointerMove = useCallback((e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
     setParallax({ x: -nx * 14, y: -ny * 10 });
   }, []);
 
@@ -49,59 +96,66 @@ const Hero = () => {
     setParallax({ x: 0, y: 0 });
   }, []);
 
-  const currentTitle = TITLES[titleIndex];
+  const leftBracket = { rest: { x: 0, scale: 1 }, hover: { x: -4, scale: 1.08 } };
+  const rightBracket = { rest: { x: 0, scale: 1 }, hover: { x: 4, scale: 1.08 } };
+  const labelVariants = { rest: { x: 0 }, hover: { x: 8 } };
+  const containerVariants = { rest: { scaleX: 1 }, hover: { scaleX: 1.08 } };
 
   return (
     <section
-      className="hero-shell"
+      className="hero-section hero-luxury"
       id="home"
       onMouseMove={handlePointerMove}
       onMouseLeave={handlePointerLeave}
     >
-      <div className="hero-watermark-layer" aria-hidden="true">
+      {/* Background watermark */}
+      <div className="hero-bg-layer" aria-hidden="true">
         <motion.p
           className="hero-watermark"
-          animate={reducedMotion ? { x: 0, y: 0 } : { x: parallax.x, y: parallax.y }}
+          animate={{ x: parallax.x, y: parallax.y }}
           transition={{ type: 'spring', stiffness: 120, damping: 22, mass: 0.8 }}
         >
           TANISHKA AGARWAL
         </motion.p>
       </div>
 
-      <div className="hero-grid">
-        <div className="hero-column hero-column--left">
-          <div className="hero-column-inner hero-column-inner--left">
-            <div className="hero-status-block">
-              <p className="hero-status-line">LOC // GREATER NOIDA, IN</p>
-              <p className="hero-status-line hero-status-line--accent">
-                <span className="hero-status-dot" aria-hidden="true">
-                  •
-                </span>
-                <span>STATUS // OPEN FOR SYSTEM ARCHITECTURE</span>
-              </p>
-            </div>
+      {/* Editorial spine (hidden) */}
+      <div className="hero-spine" aria-hidden="true" />
 
-            <div className="hero-intent-block" role="navigation" aria-label="Hero intent index">
-              <button type="button" className="hero-intent-row interactive">
-                <span className="hero-intent-copy">→ [ ENGAGE AI CHAT ]</span>
-              </button>
+      {/* Corner targets */}
+      <span className="hero-crosshair hero-crosshair--tl" aria-hidden="true">
+        +
+      </span>
+      <span className="hero-crosshair hero-crosshair--tr" aria-hidden="true">
+        +
+      </span>
+      <span className="hero-crosshair hero-crosshair--bl" aria-hidden="true">
+        +
+      </span>
+      <span className="hero-crosshair hero-crosshair--br" aria-hidden="true">
+        +
+      </span>
 
-              <button type="button" className="hero-intent-row interactive">
-                <span className="hero-intent-copy">→ [ INDEX OF PROJECTS ]</span>
-              </button>
-            </div>
-          </div>
-        </div>
+      {/* System header + intent index removed to simplify header */}
 
-        <div className="hero-column hero-column--right">
-          <div className="hero-column-inner hero-column-inner--right">
-            <p className="hero-kicker">I AM A</p>
+      {/* Main layout: left narrative / right portal */}
+      <div className="hero-layout">
+        <div className="hero-copy">
+          <motion.div
+            className="hero-copy-inner"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.55, ease: 'easeOut' }}
+          >
+            <p className="hero-eyebrow">I AM A</p>
 
-            <h1 className="hero-headline" aria-live="polite">
-              {currentTitle}
+            <h1 className="hero-title" aria-live="polite">
+              <KineticHeadline key={titleKey} phrases={currentTitle.phrases} reducedMotion={reducedMotion} />
             </h1>
-          </div>
+          </motion.div>
         </div>
+
+        <aside className="hero-portal" aria-label="Reserved for interactive AI chat module" />
       </div>
     </section>
   );
