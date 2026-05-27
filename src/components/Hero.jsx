@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './Hero.css';
 
@@ -73,29 +73,12 @@ function KineticHeadline({ phrases, reducedMotion }) {
 const Hero = () => {
   const [titleIndex, setTitleIndex] = useState(0);
   const reducedMotion = useReducedMotion();
-  const heroRef = useRef(null);
-  const [isHeroVisible, setIsHeroVisible] = useState(true);
 
   useEffect(() => {
     const id = setInterval(() => {
       setTitleIndex((i) => (i + 1) % TITLES.length);
     }, ROTATION_MS);
     return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    const node = heroRef.current;
-    if (!node) return undefined;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsHeroVisible(entry.isIntersecting);
-      },
-      { threshold: 0.15 }
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
   }, []);
 
   const currentTitle = TITLES[titleIndex];
@@ -110,14 +93,7 @@ const Hero = () => {
     <section
       className="hero-section hero-luxury"
       id="home"
-      ref={heroRef}
     >
-      {isHeroVisible && (
-        <div className="hero-bg-layer" aria-hidden="true">
-          <motion.p className="hero-watermark">TANISHKA AGARWAL</motion.p>
-        </div>
-      )}
-
       {/* Editorial spine (hidden) */}
       <div className="hero-spine" aria-hidden="true" />
 

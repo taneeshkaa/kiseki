@@ -53,11 +53,16 @@ function App() {
 
   return (
     <div className="app-container">
+      <div className="page-watermark" aria-hidden="true">
+        <span className="page-watermark__text">TANISHKA AGARWAL</span>
+      </div>
       <Navbar theme={theme} onThemeChange={handleThemeChange} />
       
       <main>
-        <Hero />
-        <About />
+        <div className="editorial-canvas">
+          <Hero />
+          <About />
+        </div>
         <Skills />
         <Projects />
         <Resume />

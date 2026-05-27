@@ -1,8 +1,7 @@
 .about-section {
   position: relative;
-  min-height: 100vh;
   width: 100%;
-  padding: clamp(2.5rem, 5vh, 4rem) clamp(1.25rem, 4vw, 3rem);
+  padding: 4rem 0;
   background: transparent;
   color: var(--text-primary);
   display: flex;
@@ -16,7 +15,6 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 40% 1px 60%;
-  min-height: calc(100vh - clamp(2.5rem, 5vh, 4rem));
   align-content: start;
 }
 
