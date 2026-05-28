@@ -12,7 +12,6 @@
 .about-shell {
   position: relative;
   width: min(1240px, calc(100% - 2rem));
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 40% 1px 60%;
   align-content: start;

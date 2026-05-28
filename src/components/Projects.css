@@ -1,7 +1,8 @@
 .projects-section {
   position: relative;
   width: 100%;
-  padding: 4rem 0;
+  /* add extra top whitespace between About and Projects */
+  padding: clamp(6.5rem, 12vw, 14rem) 0;
   background: transparent;
   color: var(--text-primary);
   display: flex;
@@ -13,7 +14,7 @@
   position: relative;
   width: 100%;
   max-width: none;
-  margin: 0;
+  margin-left: 2rem;
   padding-left: 0;
   padding-right: 2rem;
   display: flex;
@@ -52,7 +53,7 @@
   max-width: none;
   white-space: nowrap;
   font-family: var(--font-main);
-  font-size: clamp(2.3rem, 3.9vw, 5.1rem);
+  font-size: clamp(2.5rem, 5vw, 4.75rem);
   font-weight: 900;
   letter-spacing: -0.05em;
   line-height: 0.95;
@@ -82,21 +83,29 @@
 }
 
 .project-description {
-  margin: 0.65rem 0 0;
-  max-width: 52ch;
-  color: var(--text-secondary);
-  font-size: 1rem;
+  margin: 0.6rem 0 0;
+  max-width: 60ch;
+  color: color-mix(in srgb, currentColor 75%, transparent);
+  font-size: 1.02rem;
   line-height: 1.6;
+  opacity: 0.95;
+  display: block;
 }
 
 .project-tags {
-  margin-top: 0.85rem;
+  margin-top: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-secondary);
+}
+
+/* ensure description is still visible when reveal is active */
+.project-reveal + .project-description,
+.project-block .project-description {
+  color: color-mix(in srgb, currentColor 80%, transparent);
 }
 
 .project-reveal {
@@ -119,11 +128,63 @@
   filter: saturate(0.98) contrast(1.04);
 }
 
-.project-actions {
+.image-container {
+  position: relative;
+  width: 100%;
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem 2rem;
-  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 220ms cubic-bezier(.16,1,.3,1), transform 220ms cubic-bezier(.16,1,.3,1);
+}
+
+.overlay-link {
+  pointer-events: auto;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  background: rgba(0,0,0,0.82);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.overlay-link:hover,
+.overlay-link:focus {
+  transform: translateY(-4px) scale(1.04);
+  background: rgba(0,0,0,0.92);
+  color: #fff;
+}
+
+.overlay-link:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.12);
+  outline-offset: 4px;
+}
+
+/* reveal overlay when the project is active or hovered/focused */
+.project-block:hover .image-overlay,
+.project-block:focus-within .image-overlay,
+.project-reveal .image-overlay {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.project-actions {
+  display: none;
 }
 
 .project-action-link {
