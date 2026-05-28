@@ -15,9 +15,8 @@ const About = () => {
           <motion.p
             className="about-token"
             initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45 }}
-            viewport={{ once: true, amount: 0.5 }}
           >
             01 // THE FOCUS
           </motion.p>
@@ -26,9 +25,8 @@ const About = () => {
             id="about-title"
             className="about-manifesto"
             initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: 'easeOut' }}
-            viewport={{ once: true, amount: 0.35 }}
           >
             I&apos;m a Creative Technologist based in the digital frontier. I specialize in building what you require.
           </motion.h2>

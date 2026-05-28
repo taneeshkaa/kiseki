@@ -52,7 +52,6 @@ const Navbar = ({ theme, onThemeChange }) => {
               transition={{ delay: 0.1 * idx }}
             >
               {link.name}
-              <span className="underline"></span>
             </motion.a>
           ))}
           
