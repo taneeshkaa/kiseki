@@ -14,8 +14,8 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-top">
           <div className="footer-brand">
-            <span className="logo-text">PORTFOLIO<span className="dot">.</span>DEV</span>
-            <p>Architecting the digital future with precision and style.</p>
+            <span className="logo-text">TANISHKA<span className="dot"> </span>AGARWAL</span>
+            <p>Sharp logic on the back. Raw texture on the front.</p>
           </div>
           
           <div className="footer-links">

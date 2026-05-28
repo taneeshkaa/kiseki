@@ -1,28 +1,23 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, FileText, CheckCircle2, ShieldCheck, Terminal, Cpu } from 'lucide-react';
+import { Download, FileText, CheckCircle2 } from 'lucide-react';
+import resumeFile from '../assets/TANISHKA AGARWALL.docx';
 import './Resume.css';
 
 const Resume = () => {
   const [activeTab, setActiveTab] = useState('highlights');
 
-  const stats = [
-    { label: "COMMITS PUSHED", value: "2,450+", icon: <Terminal size={16} /> },
-    { label: "THREATS ANALYZED", value: "140+", icon: <ShieldCheck size={16} /> },
-    { label: "SERVICES DEPLOYED", value: "32", icon: <Cpu size={16} /> },
-  ];
-
   const highlights = [
-    "Expertise in secure coding guidelines and OWASP Top 10 mitigations.",
-    "Proven track record of designing scalable microservice architectures.",
-    "Proficient in modern infrastructure setup (Kubernetes, Terraform, AWS).",
-    "Continuous open-source contributor and security researcher."
+    "Proficient in designing robust RESTful APIs using Node.js and Express.js backend architectures.",
+    "Expertise in crafting interactive, high-performance user interfaces using React.js and modern state management.",
+    "Deep implementation of secure identity flows, including JWT Authentication and protected relational data schemas.",
+    "Dedicated to writing clean, maintainable systems code with structured optimization and seamless API integrations."
   ];
 
   const techStack = [
-    { category: "Languages", items: ["Rust", "TypeScript", "Go", "Python", "C++"] },
-    { category: "Web Frameworks", items: ["React", "Next.js", "Express", "FastAPI"] },
-    { category: "Security Tools", items: ["Burp Suite", "Wireshark", "Metasploit", "Nmap"] },
+    { category: "Languages", items: ["JavaScript", "TypeScript", "C++", "Python"] },
+    { category: "Web Stack & Engines", items: ["React", "Node.js", "Express", "Tailwind CSS"] },
+    { category: "Systems & Architecture", items: ["Computer Networking", "Cyber Theory", "PostgreSQL", "NeonDB"] },
   ];
 
   return (
@@ -40,7 +35,7 @@ const Resume = () => {
           whileInView={{ opacity: 1, y: 0 }}
           className="section-title"
         >
-          SECURE <span className="text-reveal">RESUME</span> TRANSMISSION
+          RESUME
         </motion.h2>
       </div>
 
@@ -67,27 +62,14 @@ const Resume = () => {
           >
             <FileText size={40} className="doc-icon" />
             <h3>PORTFOLIO_RESUME.pdf</h3>
-            <p>Verification Checksum: MD5_3A9F2E78...</p>
-            <a href="#" className="download-btn interactive">
-              DOWNLOAD DECRYPTED COPY
+            <a href={resumeFile} download="TANISHKA AGARWALL.docx" className="download-btn interactive">
+              DOWNLOAD RESUME (.PDF)
               <Download size={18} />
             </a>
           </motion.div>
         </div>
 
         <div className="resume-main-panel liquid-glass">
-          <div className="stats-row">
-            {stats.map((stat, idx) => (
-              <div key={idx} className="stat-card">
-                <div className="stat-icon">{stat.icon}</div>
-                <div>
-                  <span className="stat-value">{stat.value}</span>
-                  <span className="stat-label">{stat.label}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
           <div className="tab-content-area">
             <AnimatePresence mode="wait">
               {activeTab === 'highlights' && (
@@ -99,7 +81,7 @@ const Resume = () => {
                   transition={{ duration: 0.3 }}
                   className="highlights-tab"
                 >
-                  <h3>Key Focus Areas & Impact</h3>
+                  <h3>Core Frameworks & Architecture</h3>
                   <ul>
                     {highlights.map((h, idx) => (
                       <li key={idx}>
