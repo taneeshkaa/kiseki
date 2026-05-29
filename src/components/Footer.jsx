@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
-import { Github, Linkedin, Twitter } from './Icons';
+import { Github, Linkedin, LeetCode } from './Icons';
 import './Footer.css';
 
 const Footer = () => {
@@ -21,14 +21,38 @@ const Footer = () => {
           <div className="footer-links">
             <a href="#about">About</a>
             <a href="#projects">Projects</a>
-            <a href="#experience">Experience</a>
+            <a href="#skills">Skills</a>
             <a href="#contact">Contact</a>
           </div>
           
           <div className="footer-social">
-            <a href="#" className="interactive"><Github size={20} /></a>
-            <a href="#" className="interactive"><Linkedin size={20} /></a>
-            <a href="#" className="interactive"><Twitter size={20} /></a>
+            <a
+              href="https://github.com/taneeshkaa"
+              target="_blank"
+              rel="noreferrer"
+              className="interactive"
+              aria-label="GitHub"
+            >
+              <Github size={20} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/tanishkaag"
+              target="_blank"
+              rel="noreferrer"
+              className="interactive"
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={20} />
+            </a>
+            <a
+              href="https://leetcode.com/u/tanishkaa14/"
+              target="_blank"
+              rel="noreferrer"
+              className="interactive"
+              aria-label="LeetCode"
+            >
+              <LeetCode size={20} />
+            </a>
           </div>
         </div>
         

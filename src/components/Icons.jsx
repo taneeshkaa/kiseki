@@ -39,7 +39,7 @@ export const Linkedin = ({ size = 20, className = '', ...props }) => (
   </svg>
 );
 
-export const Twitter = ({ size = 20, className = '', ...props }) => (
+export const LeetCode = ({ size = 20, className = '', ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -47,12 +47,22 @@ export const Twitter = ({ size = 20, className = '', ...props }) => (
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="2"
+    strokeWidth="0"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
     {...props}
   >
-    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+    {/* LeetCode logo (stylized 'LC') */}
+    <path
+      d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"
+      fill="currentColor"
+      opacity="0.12"
+    />
+    <path
+      d="M9 15.5c-.55 0-1-.45-1-1V9.5c0-.55.45-1 1-1h6c.55 0 1 .45 1 1V14.5c0 .55-.45 1-1 1H9Zm1.2-2.1h3.6v-1.1h-1.5v-1.2h1.3V10h-3.4v1.1h1.4v1.2h-1.4v1.1Z"
+      fill="currentColor"
+    />
   </svg>
 );
+
